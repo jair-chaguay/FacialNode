@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  position: relative;
+  padding: 20px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: auto; /* Ajusta la altura según sea necesario */
+  background-color: white; /* Fondo blanco para el contenedor del video */
+}
+
+video {
+  width: 100%; /* Asegúrate de que el video ocupe el ancho del contenedor */
+  height: auto; /* Ajusta la altura para mantener la proporción del video */
+  display: block;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

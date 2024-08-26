@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="stylesheets/crud.css">
+  <script src="javascripts/face-api.min.js"></script>
+
+</head>
+
+<body>
+  
+  <div class="container">
+    <aside class="sidebar">
+      <div class="dashboard">Dashboard</div>
+      <div class="interface">
+        <p>REGISTRO</p>
+        <button>ASISTENCIA</button>
+        <button ><a class="logout" href="/logout">LOGOUT</a> </button>
+
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Datos de asistencias</h1>
+        <button class="new-button" onclick="openFaceRecognition(<%= currentUser.idUser %>)"> Registrar
+          Asistencia</button>
+      </header>
+
+      <div class="table-container">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Last Name</th>
+              <th>Hora de Entrada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% currentAsistenciaid.forEach( asistencia=> {%>            
+              <tr>
+              <td id="idUsuario">
+                <%= asistencia.idAsistencia %>
+              </td>
+              <td>
+                <%= asistencia.userId %>
+              </td>
+              <td>
+                <%= asistencia.name %>
+              </td>
+              <td>
+                <%= asistencia.lastName %>
+              </td>
+              <td><%= asistencia.entryDate %></td>
+
+
+            </tr>
+            <% }) %>
+
+          </tbody>
+        </table>
+
+
+
+        <!-- Ventana de video para reconocimiento facial -->
+        <div id="videoModal" style="display:none;">
+          <div>
+            <video id="video" width="640" height="480" autoplay></video>
+            <canvas id="canvas" width="640" height="480"></canvas>
+            <div class="button-container">
+              <button class="new-button" onclick="captureImage()">Capturar Imagen</button>
+              <button class="new-button" onclick="closeVideoModal()">Cerrar</button>
+            </div>
+          </div>
+          
+        </div>
+    </main>
+
+  </div>
+
+
+  <script src="javascripts/asistencia.js"></script>
+</body>
+
+</html>
