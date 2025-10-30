@@ -1,12 +1,12 @@
-var contador = true;
+let contador = true;
 //esto es para el login solo es la funcion para que al momento de darle clic al boton del ojo se oculte o se muestr
 //la contraseña
 function vista() {
     
-    var texto = document.getElementById("verPassword");
+    let texto = document.getElementById("verPassword");
     //Si el contador es true cambia el el campo de entrada input de password a text permitiendo ver y actualiza el contador a falso
     //en caso de otra interacción
-    if (contador == true) {
+    if (contador) {
         texto.className = "fas fa-eye-slash verPassword";
         document.getElementById("input").type="text";
         contador=false;

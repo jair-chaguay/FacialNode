@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-let crypto = require('crypto');
+let crypto = require('node:crypto');
 const sequelize = require('../models/index.js').sequelize;
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);

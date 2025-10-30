@@ -1,4 +1,4 @@
-usuario = document.getElementById('idUsuario');
+let usuario = document.getElementById('idUsuario');
 let currentUserId = null;
 
 function openFaceRecognition(userId) {
@@ -24,56 +24,63 @@ function closeVideoModal() {
   // Detener la transmisión de video al cerrar el modal
   const video = document.getElementById('video');
   const stream = video.srcObject;
+
   if (stream) {
     const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
+    for (const track of tracks) {
+      track.stop();
+    }
     video.srcObject = null;
   }
 }
 
+
 function captureImage() {
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
 
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  if (video.readyState === video.HAVE_ENOUGH_DATA) {
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Detener el video después de capturar la imagen
-      const stream = video.srcObject;
-      if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-        video.srcObject = null;
+    // Detener el video después de capturar la imagen
+    const stream = video.srcObject;
+    if (stream) {
+      const tracks = stream.getTracks();
+      for (const track of tracks) {
+        track.stop();
       }
-
-      const imageBlob = canvas.toDataURL('image/jpeg');
-      const base64Data = imageBlob.replace(/^data:image\/jpeg;base64,/, '');
-
-      const userId = currentUserId;
-      if (!userId || !base64Data) {
-        console.error('Faltan datos para enviar.');
-        return;
-      }
-
-      fetch('http://localhost:3000/asistencia', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ imageBlob: base64Data, userId })
-      })
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    } else {
-      console.error('El video no está listo para capturar.');
+      video.srcObject = null;
     }
+
+    const imageBlob = canvas.toDataURL('image/jpeg');
+    const base64Data = imageBlob.replace(/^data:image\/jpeg;base64,/, '');
+
+    const userId = currentUserId;
+    if (!userId || !base64Data) {
+      console.error('Faltan datos para enviar.');
+      return;
+    }
+
+    fetch('http://localhost:3000/asistencia', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ imageBlob: base64Data, userId })
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  } else {
+    console.error('El video no está listo para capturar.');
   }
+}
+
 
 
   function showNotification(message, isSuccess) {
